@@ -1,0 +1,113 @@
+data wrangling-1///////////////////////////////////////////////////////////////////////////////
+
+df.size()
+df.head()
+df.describe()
+df.shape
+df.dtypes
+df.ndim
+
+df.Calories =df.Calories.abs()
+df.isnull().sum()
+x=df.Calories.mean()
+df.Calories.fillna(x,inplace=True)
+df.Calories =df.Calories.astype(int)
+df.dropna(subset='Date',inplace=True)
+df.loc[7,'Duration']=45
+df.duplicated().sum()
+df.drop_duplicates(inplace=True)
+
+data analytics 2////////////////////////////////////////////////////////////////////////////////////
+df.read()
+df.drop(['User ID','Gender'],inplace=True,axis=1)
+y=df.Purchased
+x=df.drop('Purchased',axis=1)
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25,random_state=0)
+from sklearn.preprocessing import StandardScaler
+std=StandardScaler()
+x_test=std.fit_transform(x_test)
+x_train=std.fit_transform(x_train)
+from sklearn.linear_model import LogisticRegression
+model=LogisticRegression()
+model.fit(x_train, y_train)
+y_pred=model.predict(x_test)
+from sklearn.metrics import accuracy_score, confusion_matrix
+acc=accuracy_score(y_test, y_pred)
+print('Accuracy Score: ', acc)
+c_m=confusion_matrix(y_pred, y_test)
+print('Confusion Matrix', c_m)
+from sklearn.metrics import precision_score, recall_score
+pre=precision_score(y_test, y_pred)
+print('Precision Score: ', pre)
+rec=recall_score(y_test, y_pred)
+print('Recall Score: ', rec)
+from sklearn.metrics import classification_report
+print(classification_report(y_test, y_pred))
+
+data analytics 3////////////////////////////////////////////////////////////////////////////////////
+import seaborn as sns
+id1=sns.load_dataset('iris')
+y=id1.species
+x=id1.drop('species',axis=1)
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25,random_state=0)
+from sklearn.preprocessing import StandardScaler
+std=StandardScaler()
+x_test=std.fit_transform(x_test)
+x_train=std.fit_transform(x_train)
+
+from sklearn.naive_bayes import GaussianNB
+model=GaussianNB()
+model.fit(x_train,y_train)
+y_pred=model.predict(x_test)
+ from sklearn.metrics import confusion_matrix,accuracy_score,precision_score,recall_score,classification_report
+acc=accuracy_score(y_test, y_pred)
+print('Accuracy Score: ', acc)
+c_m=confusion_matrix(y_pred, y_test)
+print('Confusion Matrix', c_m)
+pre=precision_score(y_test, y_pred)
+print('Precision Score: ', pre)
+rec=recall_score(y_test, y_pred)
+
+from sklearn.metrics import classification_report
+print(classification_report(y_test, y_pred))
+
+data visualization 1/////////////////////////////////////////////////////////////////////////////
+import seaborn as sns
+
+sns.histpot(data=df,x='fare')
+sns.histpot(data=df,x='fare',hue='pclass')
+
+sns.scatterplot(x='age',y='fare',data=df,hue='pclass')
+
+sns.distplot(df['fare'],aspect=2.5)
+sns.distplot(data=df,x='age',hue='sex',col='pclass')
+
+sns.barplot(x='sex',y='age',data=df,hue='embarked')
+sns.barplot(x='embarked',y='age',data=df,hue='pclass')
+
+sns.countplot(x='pclass',data=df,hue='sex')
+
+sns.catplot(x='embarked',hue='survived',kind='count',col='pclass',data=df)
+
+
+pallavi mam ///////////////////////////////////////
+mean mode median 
+ # Calcualting mean without using libraries
+mean_score = sum(df['Income'])/len(df['Income'])
+print(mean_score)
+
+# Calculating Median without using lib
+n = len(df['Income'])
+if n % 2:
+    income_median = sorted(df['Income'])[round(0.5*(n-1))]
+else:
+    x_ord, index = sorted(df['Income']), round(0.5 * n)
+income_median = 0.5 * (x_ord[index-1] + x_ord[index])
+print(income_median)
+
+
+
